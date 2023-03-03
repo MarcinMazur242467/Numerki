@@ -1,0 +1,42 @@
+from Solver import Solver
+
+
+class SecantSolver(Solver):
+
+    yLL = None
+    def __init__(self, function, rangeL, rangeR, epsilon,iterations):
+        super(SecantSolver, self).__init__(function, rangeL, rangeR, epsilon,iterations)
+
+
+    def solveE(self):
+        yL =  self.function(self.rangeL)
+        yR = self.function(self.rangeR)
+        rangeL = self.rangeL
+        rangeR = self.rangeR
+        while abs(rangeL - rangeR) > self.epsilon:
+            x0 = rangeL -(yL*((rangeL-rangeR)/(yL-yR)))
+            f0 = self.function(x0)
+            if abs(f0) < self.epsilon:
+                return x0
+            rangeR = rangeL
+            yR = yL
+            rangeL = x0
+            yL = f0
+
+    def solveI(self):
+        yL =  self.function(self.rangeL)
+        yR = self.function(self.rangeR)
+        rangeL = self.rangeL
+        rangeR = self.rangeR
+
+        i = self.iterations
+        while i > 0 :
+            x0 = rangeL -(yL*((rangeL-rangeR)/(yL-yR)))
+            f0 = self.function(x0)
+            rangeR = rangeL
+            yR = yL
+            rangeL = x0
+            yL = f0
+            i = i - 1
+            if i == 0:
+                return x0
