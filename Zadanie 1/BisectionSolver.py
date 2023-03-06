@@ -10,10 +10,8 @@ class BisectionSolver(Solver):
         rangeR = self.rangeR
         yL = self.function(rangeL)
         yR = self.function(rangeR)
-        # print(yL)
-        # print(yR)
         if yL * yR > 0:
-            raise Exception("Nie ma miejsc zerowych lub wiele miejsc zerowych")
+            return "Nie ma miejsc zerowych lub jest ich więcej niż 1 w podanym przedziale"
         while True:
             x0 = (rangeL + rangeR) / 2
             x = self.function(x0)
@@ -31,7 +29,7 @@ class BisectionSolver(Solver):
         rangeL = self.rangeL
         rangeR = self.rangeR
         if yL * yR > 0:
-            raise Exception("Nie ma miejsc zerowych lub wiele miejsc zerowych")
+            return "Nie ma miejsc zerowych lub jest ich więcej niż 1 w podanym przedziale"
         for i in range (self.iterations):
             x0 = (rangeL + rangeR) / 2
             x = self.function(x0)

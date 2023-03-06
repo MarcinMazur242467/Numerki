@@ -35,7 +35,7 @@ class SecantSolver(Solver):
         i = self.iterations
         while i > 0 :
             if yL - yR == 0:
-                 raise Exception("nie udało sie")
+                 return "Nie ma miejsc zerowych lub jest ich więcej niż 1 w podanym przedziale"
             x0 = rangeL -(yL*((rangeL-rangeR)/(yL-yR)))
             f0 = self.function(x0)
             rangeR = rangeL
