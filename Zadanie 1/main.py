@@ -859,8 +859,6 @@ def main():
                 elif choiceStop == "2":
                     result = SSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
-    if type(result) == str:
-        result=''
     Pprinter = Printer(result,function,rangeLL, rangeRR)
     Pprinter.printPlot()
 

@@ -16,10 +16,14 @@ class Printer:
         s = self.function(t)
         fig, ax = plt.subplots(figsize=(10, 7))
         ax.plot(t, s)
-        ax.set(title='Wykres wybranej funkcji w podanym przedziale', xlabel='Miejsce zerowe funkcji: x = ' + str(self.result))
+        if type(self.result) == str:
+            ax.set(title='Wykres wybranej funkcji w podanym przedziale', xlabel=str(self.result))
+        else:
+            ax.set(title='Wykres wybranej funkcji w podanym przedziale', xlabel='Miejsce zerowe funkcji: x = ' + str(self.result))
         ax.xaxis.label.set_size(18)
         ax.title.set_size(25)
-        ax.plot(self.result, 0, 'o', color='red')
+        if type(self.result) != str:
+            ax.plot(self.result, 0, 'o', color='red')
         ax.grid()
         ax.axhline(0, color='black', lw=2)
         ax.axvline(0, color='black', lw=2)
