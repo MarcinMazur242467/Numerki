@@ -1,5 +1,5 @@
 class Solver:
-    def __init__(self, function, rangeL, rangeR, epsilon=1, iterations=1):
+    def __init__(self, function, rangeL, rangeR, epsilon, iterations):
         self.function = function
         self.rangeL = rangeL
         self.rangeR = rangeR

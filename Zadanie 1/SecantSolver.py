@@ -3,7 +3,10 @@ from Solver import Solver
 
 class SecantSolver(Solver):
 
-    yLL = None
+# prosta przez wykres fukcji na krancach przedziału
+# obliczamy kandydata na miejsce zerowe
+# zależenie od tego jakie sa znaki na lewo i prawo od miejsca zerowego
+
     def __init__(self, function, rangeL, rangeR, epsilon,iterations):
         super(SecantSolver, self).__init__(function, rangeL, rangeR, epsilon,iterations)
 
@@ -31,6 +34,8 @@ class SecantSolver(Solver):
 
         i = self.iterations
         while i > 0 :
+            if yL - yR == 0:
+                 raise Exception("nie udało sie")
             x0 = rangeL -(yL*((rangeL-rangeR)/(yL-yR)))
             f0 = self.function(x0)
             rangeR = rangeL
