@@ -91,42 +91,77 @@ def main():
                 print("Miejsce zerowe funckji: " + str(BSolver.solveI()))
         elif choice == "4":
             if funcComposition == "11":
-                print();
+                print()
             elif funcComposition == "12":
+
             elif funcComposition == "13":
+
             elif funcComposition == "21":
+
             elif funcComposition == "22":
+
             elif funcComposition == "23":
+
             elif funcComposition == "31":
+
             elif funcComposition == "32":
+
             elif funcComposition == "33":
+
             elif funcComposition == "111":
+
             elif funcComposition == "112":
+
             elif funcComposition == "113":
+
             elif funcComposition == "121":
+
             elif funcComposition == "122":
+
             elif funcComposition == "123":
+
             elif funcComposition == "131":
+
             elif funcComposition == "132":
+
             elif funcComposition == "133":
+
             elif funcComposition == "211":
+
             elif funcComposition == "212":
+
             elif funcComposition == "213":
+
             elif funcComposition == "221":
+
             elif funcComposition == "222":
+
             elif funcComposition == "223":
+
             elif funcComposition == "231":
+
             elif funcComposition == "232":
+
             elif funcComposition == "233":
+
             elif funcComposition == "311":
+
             elif funcComposition == "312":
+
             elif funcComposition == "313":
+
             elif funcComposition == "321":
+
             elif funcComposition == "322":
+
             elif funcComposition == "323":
+
             elif funcComposition == "331":
+
             elif funcComposition == "332":
+
             elif funcComposition == "333":
+
     elif method == "2":
         if choice == "1":
             pass
