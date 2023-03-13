@@ -32,7 +32,7 @@ class SecantSolver(Solver):
         rangeL = self.rangeL
         rangeR = self.rangeR
 
-        i = self.iterations
+        i = int(self.iterations)
         while i > 0 :
             if yL - yR == 0:
                  return "Nie ma miejsc zerowych lub jest ich więcej niż 1 w podanym przedziale"

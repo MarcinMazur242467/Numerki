@@ -28,9 +28,10 @@ class BisectionSolver(Solver):
         yR = self.function(self.rangeR)
         rangeL = self.rangeL
         rangeR = self.rangeR
+        n = int(self.iterations)
         if yL * yR > 0:
             return "Nie ma miejsc zerowych lub jest ich więcej niż 1 w podanym przedziale"
-        for i in range (self.iterations):
+        for i in range(n):
             x0 = (rangeL + rangeR) / 2
             x = self.function(x0)
             if x * self.function(rangeL) < 0:
