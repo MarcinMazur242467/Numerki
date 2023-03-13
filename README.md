@@ -1,2 +1,4 @@
 # Numerki
-dupsko he he xdd 
+Zespół: 
+Piotr Płeska 242499
+Marcin Mazur 242467
