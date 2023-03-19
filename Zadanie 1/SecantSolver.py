@@ -16,11 +16,14 @@ class SecantSolver(Solver):
         yR = self.function(self.rangeR)
         rangeL = self.rangeL
         rangeR = self.rangeR
+        licznik = 0
         while abs(rangeL - rangeR) > self.epsilon:
+            licznik+=1
             x0 = rangeL -(yL*((rangeL-rangeR)/(yL-yR)))
             f0 = self.function(x0)
             if abs(f0) < self.epsilon:
                 if x0 <= self.rangeR and x0>self.rangeL:
+                    print(licznik)
                     return x0
                 else:
                     return "Brak miejsca zerowego w przedziale"
@@ -37,7 +40,8 @@ class SecantSolver(Solver):
 
         i = int(self.iterations)
         while i > 0 :
-            if yL - yR == 0:
+
+            if yL == yR:
                  return "Nie ma miejsc zerowych lub jest ich więcej niż 1 w podanym przedziale"
             x0 = rangeL -(yL*((rangeL-rangeR)/(yL-yR)))
             f0 = self.function(x0)

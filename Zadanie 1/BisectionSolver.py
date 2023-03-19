@@ -6,6 +6,7 @@ class BisectionSolver(Solver):
         super(BisectionSolver, self).__init__(function, rangeL, rangeR, epsilon, iterations)
 
     def solveE(self):
+        licznik=0
         rangeL = self.rangeL
         rangeR = self.rangeR
         yL = self.function(rangeL)
@@ -13,9 +14,11 @@ class BisectionSolver(Solver):
         if yL * yR > 0:
             return "Nie ma miejsc zerowych lub jest ich więcej niż 1 w podanym przedziale"
         while True:
+            licznik+=1
             x0 = (rangeL + rangeR) / 2
             x = self.function(x0)
             if abs(x) < self.epsilon:
+                print(licznik)
                 return x0
             if x * self.function(rangeL) < 0:
                 rangeR = x0
