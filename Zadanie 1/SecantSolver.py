@@ -20,7 +20,10 @@ class SecantSolver(Solver):
             x0 = rangeL -(yL*((rangeL-rangeR)/(yL-yR)))
             f0 = self.function(x0)
             if abs(f0) < self.epsilon:
-                return x0
+                if x0 <= self.rangeR and x0>self.rangeL:
+                    return x0
+                else:
+                    return "Brak miejsca zerowego w przedziale"
             rangeR = rangeL
             yR = yL
             rangeL = x0
@@ -44,4 +47,7 @@ class SecantSolver(Solver):
             yL = f0
             i = i - 1
             if i == 0:
-                return x0
+                if x0 <= self.rangeR and x0 > self.rangeL:
+                    return x0
+                else:
+                    return "Brak miejsca zerowego w przedziale"

@@ -4,16 +4,8 @@ from Printer import Printer
 import numpy as np
 
 
-
-
-
 def polynominal(x):
-    return 5 * x * x * x * x * x + 4 * x * x * x * x - 3 * x * x * x + 2 * x * x + x - 2
-
-
-def trigonometricFunction(x):
-    return np.sin(x)
-
+    return x * (x * (x * (x * (5 * x + 4) - 3) + 2) + 1) - 2
 
 def exponentialFunction(x):
     return (1 / 3) ** x - 10
@@ -41,17 +33,44 @@ def main():
 
     method = input("Podaj metode wyznaczenia miejsca zerowego: \n1. Metoda bisekcji \n2. Metoda stycznych \n")
     choice = input(
-        """Wybierz dostepna funkcje:
-        1. Wielomian
-        2. Funkcja Trygonometryczna
-        3. Funkcja Wykladnicza
-        4. Zlozenie Funkcji\n"""
+        "Wybierz dostepna funkcje:\n 1.Wielomian\n2.Funkcja Trygonometryczna\n3.Funkcja Wykladnicza\n4.Zlozenie Funkcji\n"
     )
-
     if choice == "4":
-        funcComposition = input("""
-            Podaj numery funckji ktore chcesz miec w zlozeniu [MAX 3] :(111 Wielomian(Wielomian(Wielomian(x))));11 wielomian(Wielomian(x))
-            """)
+        funcComposition = input("Podaj numery funckji ktore chcesz miec w zlozeniu [MAX 3] :(111 Wielomian(Wielomian(Wielomian(x))));11 wielomian(Wielomian(x))")
+        if "2" in  funcComposition:
+            user_input = input("podaj funckje trygonometryczna(1- sin;2- cos, 3-tan; 4-cot )")
+            if user_input == "1":
+                def trigonometricFunction(x):
+                    return np.sin(x)
+
+            elif user_input == "2":
+                def trigonometricFunction(x):
+                    return np.cos(x)
+            elif user_input == "3":
+                def trigonometricFunction(x):
+                    return np.tan(x)
+            elif user_input == "4":
+                def trigonometricFunction(x):
+                    return 1 / np.tan(x)
+            else:
+                raise Exception("Zly input");
+    if  choice == "2":
+        user_input = input("podaj funckje trygonometryczna(1- sin;2- cos, 3-tan; 4-cot )")
+        if user_input == "1":
+            def trigonometricFunction(x):
+                return np.sin(x)
+
+        elif user_input == "2":
+            def trigonometricFunction(x):
+                return np.cos(x)
+        elif user_input == "3":
+            def trigonometricFunction(x):
+                return np.tan(x)
+        elif user_input == "4":
+            def trigonometricFunction(x):
+                return 1 / np.tan(x)
+        else:
+            raise Exception("Zly input");
     while True:
         rangeLL = float(input("Podaj lewy kraniec przedzialu: \n"))
         rangeRR = float(input("Podaj prawy kraniec przedzialu: \n"))
@@ -168,7 +187,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "33":
-                function =functioCnomposition(exponentialFunction, exponentialFunction)
+                function = functioCnomposition(exponentialFunction, exponentialFunction)
                 BSolver = BisectionSolver(function, rangeLL,
                                           rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -218,9 +237,9 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "122":
-                function =  functioCnomposition(polynominal, trigonometricFunction, trigonometricFunction)
+                function = functioCnomposition(polynominal, trigonometricFunction, trigonometricFunction)
                 BSolver = BisectionSolver(
-                   function, rangeLL, rangeRR,
+                    function, rangeLL, rangeRR,
                     epsilon, iterations)
                 if choiceStop == "1":
                     result = BSolver.solveE()
@@ -259,7 +278,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "133":
-                function =functioCnomposition(polynominal, exponentialFunction, exponentialFunction)
+                function = functioCnomposition(polynominal, exponentialFunction, exponentialFunction)
                 BSolver = BisectionSolver(function,
                                           rangeLL, rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -279,7 +298,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "212":
-                function =functioCnomposition(trigonometricFunction, polynominal, trigonometricFunction)
+                function = functioCnomposition(trigonometricFunction, polynominal, trigonometricFunction)
                 BSolver = BisectionSolver(
                     function, rangeLL, rangeRR,
                     epsilon, iterations)
@@ -290,7 +309,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "213":
-                function =functioCnomposition(trigonometricFunction, polynominal, exponentialFunction)
+                function = functioCnomposition(trigonometricFunction, polynominal, exponentialFunction)
                 BSolver = BisectionSolver(function,
                                           rangeLL, rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -311,10 +330,10 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "222":
-                function =functioCnomposition(trigonometricFunction, trigonometricFunction, trigonometricFunction)
+                function = functioCnomposition(trigonometricFunction, trigonometricFunction, trigonometricFunction)
                 BSolver = BisectionSolver(function
-                    , rangeLL,
-                    rangeRR, epsilon, iterations)
+                                          , rangeLL,
+                                          rangeRR, epsilon, iterations)
                 if choiceStop == "1":
                     result = BSolver.solveE()
                     print("Miejsce zerowe funckji: " + str(result))
@@ -322,10 +341,10 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "223":
-                function =functioCnomposition(trigonometricFunction, trigonometricFunction, exponentialFunction)
+                function = functioCnomposition(trigonometricFunction, trigonometricFunction, exponentialFunction)
                 BSolver = BisectionSolver(function
-                    , rangeLL,
-                    rangeRR, epsilon, iterations)
+                                          , rangeLL,
+                                          rangeRR, epsilon, iterations)
                 if choiceStop == "1":
                     result = BSolver.solveE()
                     print("Miejsce zerowe funckji: " + str(result))
@@ -333,7 +352,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "231":
-                function =functioCnomposition(trigonometricFunction, exponentialFunction, polynominal)
+                function = functioCnomposition(trigonometricFunction, exponentialFunction, polynominal)
                 BSolver = BisectionSolver(function,
                                           rangeLL, rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -345,8 +364,8 @@ def main():
             elif funcComposition == "232":
                 function = functioCnomposition(trigonometricFunction, exponentialFunction, trigonometricFunction)
                 BSolver = BisectionSolver(function
-                   , rangeLL,
-                    rangeRR, epsilon, iterations)
+                                          , rangeLL,
+                                          rangeRR, epsilon, iterations)
                 if choiceStop == "1":
                     result = BSolver.solveE()
                     print("Miejsce zerowe funckji: " + str(result))
@@ -354,10 +373,10 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "233":
-                function =functioCnomposition(trigonometricFunction, exponentialFunction, exponentialFunction)
+                function = functioCnomposition(trigonometricFunction, exponentialFunction, exponentialFunction)
                 BSolver = BisectionSolver(function
-                    , rangeLL,
-                    rangeRR, epsilon, iterations)
+                                          , rangeLL,
+                                          rangeRR, epsilon, iterations)
                 if choiceStop == "1":
                     result = BSolver.solveE()
                     print("Miejsce zerowe funckji: " + str(result))
@@ -365,7 +384,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "311":
-                function =functioCnomposition(exponentialFunction, polynominal, polynominal)
+                function = functioCnomposition(exponentialFunction, polynominal, polynominal)
                 BSolver = BisectionSolver(function, rangeLL,
                                           rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -375,7 +394,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "312":
-                function =functioCnomposition(exponentialFunction, polynominal, trigonometricFunction)
+                function = functioCnomposition(exponentialFunction, polynominal, trigonometricFunction)
                 BSolver = BisectionSolver(function,
                                           rangeLL, rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -385,7 +404,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "313":
-                function =functioCnomposition(exponentialFunction, polynominal, exponentialFunction)
+                function = functioCnomposition(exponentialFunction, polynominal, exponentialFunction)
                 BSolver = BisectionSolver(function,
                                           rangeLL, rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -395,7 +414,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "321":
-                function =functioCnomposition(exponentialFunction, trigonometricFunction, polynominal)
+                function = functioCnomposition(exponentialFunction, trigonometricFunction, polynominal)
                 BSolver = BisectionSolver(function,
                                           rangeLL, rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -407,7 +426,7 @@ def main():
             elif funcComposition == "322":
                 function = functioCnomposition(exponentialFunction, trigonometricFunction, trigonometricFunction)
                 BSolver = BisectionSolver(
-                   function, rangeLL,
+                    function, rangeLL,
                     rangeRR, epsilon, iterations)
                 if choiceStop == "1":
                     result = BSolver.solveE()
@@ -416,7 +435,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "323":
-                function =functioCnomposition(exponentialFunction, trigonometricFunction, exponentialFunction)
+                function = functioCnomposition(exponentialFunction, trigonometricFunction, exponentialFunction)
                 BSolver = BisectionSolver(
                     function, rangeLL,
                     rangeRR, epsilon, iterations)
@@ -427,7 +446,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "331":
-                function =functioCnomposition(exponentialFunction, exponentialFunction, polynominal)
+                function = functioCnomposition(exponentialFunction, exponentialFunction, polynominal)
                 BSolver = BisectionSolver(function,
                                           rangeLL, rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -437,7 +456,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "332":
-                function =functioCnomposition(exponentialFunction, exponentialFunction, trigonometricFunction)
+                function = functioCnomposition(exponentialFunction, exponentialFunction, trigonometricFunction)
                 BSolver = BisectionSolver(
                     function, rangeLL,
                     rangeRR, epsilon, iterations)
@@ -448,7 +467,7 @@ def main():
                     result = BSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "333":
-                function =functioCnomposition(exponentialFunction, exponentialFunction, exponentialFunction)
+                function = functioCnomposition(exponentialFunction, exponentialFunction, exponentialFunction)
                 BSolver = BisectionSolver(
                     function, rangeLL,
                     rangeRR, epsilon, iterations)
@@ -461,7 +480,7 @@ def main():
 
     elif method == "2":
         if choice == "1":
-            function =polynominal
+            function = polynominal
             SSolver = SecantSolver(function, rangeLL, rangeRR, epsilon, iterations)
             if choiceStop == "1":
                 result = SSolver.solveE()
@@ -470,7 +489,7 @@ def main():
                 result = SSolver.solveI()
                 print("Miejsce zerowe funckji: " + str(result))
         elif choice == "2":
-            function =trigonometricFunction
+            function = trigonometricFunction
             SSolver = SecantSolver(function, rangeLL, rangeRR, epsilon, iterations)
             if choiceStop == "1":
                 result = SSolver.solveE()
@@ -479,7 +498,7 @@ def main():
                 result = SSolver.solveI()
                 print("Miejsce zerowe funckji: " + str(result))
         elif choice == "3":
-            function =exponentialFunction
+            function = exponentialFunction
             SSolver = SecantSolver(function, rangeLL, rangeRR, epsilon, iterations)
             if choiceStop == "1":
                 result = SSolver.solveE()
@@ -489,7 +508,7 @@ def main():
                 print("Miejsce zerowe funckji: " + str(result))
         elif choice == "4":
             if funcComposition == "11":
-                function =functioCnomposition(polynominal, polynominal)
+                function = functioCnomposition(polynominal, polynominal)
                 SSolver = SecantSolver(function, rangeLL, rangeRR, epsilon,
                                        iterations)
                 if choiceStop == "1":
@@ -499,7 +518,7 @@ def main():
                     result = SSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "12":
-                function =functioCnomposition(polynominal, trigonometricFunction)
+                function = functioCnomposition(polynominal, trigonometricFunction)
                 SSolver = SecantSolver(function, rangeLL, rangeRR,
                                        epsilon, iterations)
                 if choiceStop == "1":
@@ -509,7 +528,7 @@ def main():
                     result = SSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "13":
-                function =functioCnomposition(polynominal, exponentialFunction)
+                function = functioCnomposition(polynominal, exponentialFunction)
                 SSolver = SecantSolver(function, rangeLL, rangeRR,
                                        epsilon, iterations)
                 if choiceStop == "1":
@@ -559,7 +578,7 @@ def main():
                     result = SSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "32":
-                function =functioCnomposition(exponentialFunction, trigonometricFunction)
+                function = functioCnomposition(exponentialFunction, trigonometricFunction)
                 SSolver = SecantSolver(function, rangeLL,
                                        rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -589,7 +608,7 @@ def main():
                     result = SSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
             elif funcComposition == "112":
-                function =functioCnomposition(polynominal, polynominal, trigonometricFunction)
+                function = functioCnomposition(polynominal, polynominal, trigonometricFunction)
                 SSolver = SecantSolver(function, rangeLL,
                                        rangeRR, epsilon, iterations)
                 if choiceStop == "1":
@@ -859,7 +878,7 @@ def main():
                 elif choiceStop == "2":
                     result = SSolver.solveI()
                     print("Miejsce zerowe funckji: " + str(result))
-    Pprinter = Printer(result,function,rangeLL, rangeRR)
+    Pprinter = Printer(result, function, rangeLL, rangeRR)
     Pprinter.printPlot()
 
 
