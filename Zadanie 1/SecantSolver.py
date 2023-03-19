@@ -3,10 +3,6 @@ from Solver import Solver
 
 class SecantSolver(Solver):
 
-# prosta przez wykres fukcji na krancach przedziału
-# obliczamy kandydata na miejsce zerowe
-# zależenie od tego jakie sa znaki na lewo i prawo od miejsca zerowego
-
     def __init__(self, function, rangeL, rangeR, epsilon,iterations):
         super(SecantSolver, self).__init__(function, rangeL, rangeR, epsilon,iterations)
 
