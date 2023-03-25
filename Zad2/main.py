@@ -1,4 +1,3 @@
-import math
 import numpy as np
 
 
@@ -6,8 +5,6 @@ def jordanGaus(matrix, epsilon):
     size = len(matrix)
     vector = np.zeros(size)
     squareMatrix = matrix[:, :-1]
-    # if abs(np.linalg.det(squareMatrix) - 0.0) < epsilon:
-    #     return "Nieoznaczony lub sprzeczny"
     # Sprowadzamy do postaci schodkowej dolnej
     for i in range(0, size - 1):
         if abs(matrix[i, i] - 0.0) < epsilon:
@@ -17,11 +14,6 @@ def jordanGaus(matrix, epsilon):
                     matrix[i][z] += matrix[0][z]
                 else:
                     matrix[i][z] += matrix[i + 1][z]
-        # Sprawdzamy czy po dodaniu do siebie wierszy nie ma zadnych nanow (wtedy nieoznaczony)
-        for j in range(0, size):
-            for k in range(0, size + 1):
-                if math.isnan(matrix[i][j]):
-                    return "Układ równań jest nieoznaczony!"
         for j in range(i + 1, size):
             m = -(matrix[j, i] / matrix[i, i])
             for k in range(i, size + 1):
@@ -35,18 +27,19 @@ def jordanGaus(matrix, epsilon):
                     matrix[i][z] += matrix[0][z]
                 else:
                     matrix[i][z] += matrix[i + 1][z]
-        # Sprawdzamy czy po dodaniu do siebie wierszy nie ma zadnych nanow (wtedy nieoznaczony)
-        for j in range(0, size):
-            for k in range(0, size + 1):
-                if math.isnan(matrix[i][j]):
-                    return "Układ równań jest nieoznaczony!"
         for j in range(i - 1, -1, -1):
             m = -(matrix[j, i] / matrix[i, i])
             for k in range(size, i - 1, -1):
                 matrix[j, k] += m * matrix[i, k]
+    for j in range(matrix.shape[0]):
+        if abs(matrix[j][j] - 0.0) < epsilon:
+            if abs(matrix[j][j + 1] - 0.0) < epsilon:
+                return "Układ jest nieoznaczony"
+            else:
+                return "Układ jest sprzeczny"
     # Sprawdzamy wyznacznik
     if abs(np.linalg.det(squareMatrix) - 0.0) < epsilon:
-        return "Układ równan jest sprzeczny!"
+        return "Układ jest nieoznaczony!"
     for i in range(0, size):
         if matrix[i][i] == 0:
             vector[i] = 0
@@ -58,7 +51,8 @@ def jordanGaus(matrix, epsilon):
 def main():
     np.seterr(divide='ignore', invalid='ignore')
     size = 0
-    with open("matrix.txt", 'r') as file:
+    fileName = input("Podaj nazwę pliku: ")
+    with open(fileName, 'r') as file:
         lines = file.readlines()
         for x in file:
             size += 1
@@ -68,7 +62,8 @@ def main():
             row = lines[i].split(',')
             for j in range(0, size + 1):
                 matrix[i, j] = row[j]
-    print(jordanGaus(matrix, 0.000000001))
+    epsilon = float(input("Podaj epsilon: "))
+    print(jordanGaus(matrix, epsilon))
 
 
 if __name__ == '__main__':
