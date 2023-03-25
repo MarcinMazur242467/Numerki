@@ -31,7 +31,7 @@ def main():
     elif choiceStop == "2":
         iterations = input("Podaj liczbe iteracji: ")
 
-    method = input("Podaj metode wyznaczenia miejsca zerowego: \n1. Metoda bisekcji \n2. Metoda stycznych \n")
+    method = input("Podaj metode wyznaczenia miejsca zerowego: \n1. Metoda bisekcji \n2. Metoda siecznych \n")
     choice = input(
         "Wybierz dostepna funkcje:\n 1.Wielomian\n2.Funkcja Trygonometryczna\n3.Funkcja Wykladnicza\n4.Zlozenie Funkcji\n"
     )
