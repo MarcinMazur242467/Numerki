@@ -3,7 +3,9 @@ import sympy
 import matplotlib.pyplot as plt
 import numpy as np
 
-
+numbers_as_float = [0, 0]
+functionPoints = []
+result = []
 class GUI:
     def __init__(self):
         self.root = tk.Tk()
@@ -43,18 +45,16 @@ class GUI:
         self.button3 = tk.Button(self.root, text="Wprowadź przedział interpolacji", command=self.getInterpolationRange)
         self.button3.pack()
 
-        self.label = tk.Label(self.root, text="Wzór interpolacji: ", font=('Arial', 18))
-        self.label.pack(pady=10)
-
-        self.text4 = tk.Text(self.root, height=2, font=('Arial', 12), state=tk.DISABLED)
-        self.text4.pack()
-
         self.button4 = tk.Button(self.root, text="Wygeneruj wykres", command=self.printInterpolationFunctionPlot)
         self.button4.pack()
 
         self.button_authors = tk.Button(self.root, text="Autorzy", command=self.openPopup)
         self.button_authors.place(relx=0.95, rely=0.95, anchor="se")
 
+        nodeX = [1,2,4]
+        y = [2,10,2]
+        # print(self.findDifferentialQuotients(x,y))
+        print(self.findPolynomialValue(nodeX,self.findDifferentialQuotients(nodeX,y),1))
         self.root.mainloop()
 
     def getFunction(self):
@@ -78,26 +78,26 @@ class GUI:
         plt.show()
 
     def getFunctionPoints(self):
+        global functionPoints
         user_input = self.text2.get("1.0", tk.END)
         numbers_as_strings = user_input.split(",")
-        numbers_as_float = [float(number.strip()) for number in numbers_as_strings]
-        print(numbers_as_float)
-        return numbers_as_float
+        functionPoints = [float(number.strip()) for number in numbers_as_strings]
+        print(functionPoints)
+        return functionPoints
 
     def getInterpolationRange(self):
+        global numbers_as_float
         user_input = self.text3.get("1.0", tk.END)
         numbers_as_strings = user_input.split(",")
         numbers_as_float = [float(number.strip()) for number in numbers_as_strings]
         print(numbers_as_float)
-        return numbers_as_float
 
     def printInterpolationFunctionPlot(self):
-        # f = wzor wielomianu interpolacji
-        x = np.linspace(-10, 10, 1000)
-        # Wartosci funkcji
-        # y = f(x)
+        i = np.linspace(numbers_as_float[0], numbers_as_float[1], 1000)
+        x = self.getInterpolatedCooridinates(i)[0]
+        y = self.getInterpolatedCooridinates(i)[1]
         fig, ax = plt.subplots(figsize=(10, 7))
-        # ax.plot(x, y)
+        ax.plot(x, y)
         ax.grid()
         ax.axhline(0, color='black', lw=2)
         ax.axvline(0, color='black', lw=2)
@@ -106,13 +106,37 @@ class GUI:
     def openPopup(self):
         popup = tk.Toplevel(self.root,)
         popup.title("Autorzy")
-        popup.geometry("400x300")
+        popup.geometry("400x200")
         label = tk.Label(popup, text="Piotr Płeska 242499")
         label.pack(padx=20, pady=20)
         label = tk.Label(popup, text="Marcin Mazur 242467")
         label.pack(padx=20, pady=20)
         button = tk.Button(popup, text="Wyjdź", command=popup.destroy)
         button.pack(pady=10)
+
+    def findDifferentialQuotients(self, x, y):
+        global result
+        r = np.zeros(len(x))
+        result = np.zeros(len(x))
+        for i in range(len(x)):
+            r[i] = y[i]
+            for k in reversed(range(i)):
+                r[k] = (r[k+1]-r[k])/(x[i]-x[k])
+            result[i] = r[0]
+        return result
+
+    def findPolynomialValue(self, nodeX, a, x):
+        result = a[len(nodeX)-1]
+        for k in reversed(range(len(nodeX))):
+            result = result * (x-nodeX[k]) + a[k]
+        return result
+
+    def getInterpolatedCooridinates(self, x):
+        toPlot = np.zeros((1000, 2), dtype=float)
+        for i in range(1000):
+            toPlot[i][0] = x[i]
+            toPlot[i][1] = self.findPolynomialValue(functionPoints, result, x[i])
+        return toPlot
 
 
 GUI()
