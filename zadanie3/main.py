@@ -6,6 +6,7 @@ import numpy as np
 numbers_as_float = [0, 0]
 functionPoints = []
 result = []
+function= None
 class GUI:
     def __init__(self):
         self.root = tk.Tk()
@@ -58,10 +59,12 @@ class GUI:
         self.root.mainloop()
 
     def getFunction(self):
+        global function
         user_input = self.text.get("1.0", tk.END)
         # wartosc bezwzgledna wpisywac jako "Abs(x)"
         expr = sympy.parse_expr(user_input)
         f = sympy.lambdify('x', expr, 'numpy')
+        function = f
         print(f)
         return f
 
@@ -96,6 +99,8 @@ class GUI:
         i = np.linspace(numbers_as_float[0], numbers_as_float[1], 1000)
         x = self.getInterpolatedCooridinates(i)[0]
         y = self.getInterpolatedCooridinates(i)[1]
+        print(numbers_as_float[0])
+        print(numbers_as_float[1])
         fig, ax = plt.subplots(figsize=(10, 7))
         ax.plot(x, y)
         ax.grid()
@@ -132,10 +137,15 @@ class GUI:
         return b
 
     def getInterpolatedCooridinates(self, x):
+
+        y = np.zeros(len(functionPoints))
+        for k in range(len(functionPoints)):
+            y[k] = function(functionPoints[k])
+            print(k,"   ",y[k])
         toPlot = np.zeros((1000, 2), dtype=float)
         for i in range(1000):
             toPlot[i][0] = x[i]
-            toPlot[i][1] = self.findPolynomialValue(functionPoints, result, x[i])
+            toPlot[i][1] = self.findPolynomialValue(functionPoints, self.findDifferentialQuotients(functionPoints,y), x[i])
         return toPlot
 
 
