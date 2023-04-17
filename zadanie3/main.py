@@ -46,6 +46,15 @@ class GUI:
         self.label = tk.Label(self.root, text="Wzór interpolacji: ", font=('Arial', 18))
         self.label.pack(pady=10)
 
+        self.text4 = tk.Text(self.root, height=2, font=('Arial', 12), state=tk.DISABLED)
+        self.text4.pack()
+
+        self.button4 = tk.Button(self.root, text="Wygeneruj wykres", command=self.printInterpolationFunctionPlot)
+        self.button4.pack()
+
+        self.button_authors = tk.Button(self.root, text="Autorzy", command=self.openPopup)
+        self.button_authors.place(relx=0.95, rely=0.95, anchor="se")
+
         self.root.mainloop()
 
     def getFunction(self):
@@ -81,6 +90,29 @@ class GUI:
         numbers_as_float = [float(number.strip()) for number in numbers_as_strings]
         print(numbers_as_float)
         return numbers_as_float
+
+    def printInterpolationFunctionPlot(self):
+        # f = wzor wielomianu interpolacji
+        x = np.linspace(-10, 10, 1000)
+        # Wartosci funkcji
+        # y = f(x)
+        fig, ax = plt.subplots(figsize=(10, 7))
+        # ax.plot(x, y)
+        ax.grid()
+        ax.axhline(0, color='black', lw=2)
+        ax.axvline(0, color='black', lw=2)
+        plt.show()
+
+    def openPopup(self):
+        popup = tk.Toplevel(self.root,)
+        popup.title("Autorzy")
+        popup.geometry("400x300")
+        label = tk.Label(popup, text="Piotr Płeska 242499")
+        label.pack(padx=20, pady=20)
+        label = tk.Label(popup, text="Marcin Mazur 242467")
+        label.pack(padx=20, pady=20)
+        button = tk.Button(popup, text="Wyjdź", command=popup.destroy)
+        button.pack(pady=10)
 
 
 GUI()
