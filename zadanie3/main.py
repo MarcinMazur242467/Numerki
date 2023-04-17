@@ -126,10 +126,10 @@ class GUI:
         return result
 
     def findPolynomialValue(self, nodeX, a, x):
-        result = a[len(nodeX)-1]
+        b = a[len(nodeX)-1]
         for k in reversed(range(len(nodeX))):
-            result = result * (x-nodeX[k]) + a[k]
-        return result
+            b = b * (x-nodeX[k]) + a[k]
+        return b
 
     def getInterpolatedCooridinates(self, x):
         toPlot = np.zeros((1000, 2), dtype=float)
