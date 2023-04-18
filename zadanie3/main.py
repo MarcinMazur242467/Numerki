@@ -5,8 +5,9 @@ import numpy as np
 
 numbers_as_float = [0, 0]
 functionPoints = []
-result = []
-function= None
+function = None
+
+
 class GUI:
     def __init__(self):
         self.root = tk.Tk()
@@ -52,10 +53,6 @@ class GUI:
         self.button_authors = tk.Button(self.root, text="Autorzy", command=self.openPopup)
         self.button_authors.place(relx=0.95, rely=0.95, anchor="se")
 
-        nodeX = [1,2,4]
-        y = [2,10,2]
-        # print(self.findDifferentialQuotients(x,y))
-        print(self.findPolynomialValue(nodeX,self.findDifferentialQuotients(nodeX,y),1))
         self.root.mainloop()
 
     def getFunction(self):
@@ -65,12 +62,11 @@ class GUI:
         expr = sympy.parse_expr(user_input)
         f = sympy.lambdify('x', expr, 'numpy')
         function = f
-        print(f)
         return f
 
     def printOriginalFunctionPlot(self):
         f = self.getFunction()
-        x = np.linspace(-10, 10, 1000)
+        x = np.linspace(-1, 1, 1000)
         # Wartosci funkcji
         y = f(x)
         fig, ax = plt.subplots(figsize=(10, 7))
@@ -93,17 +89,15 @@ class GUI:
         user_input = self.text3.get("1.0", tk.END)
         numbers_as_strings = user_input.split(",")
         numbers_as_float = [float(number.strip()) for number in numbers_as_strings]
-        print(numbers_as_float)
 
     def printInterpolationFunctionPlot(self):
-        i = np.linspace(numbers_as_float[0], numbers_as_float[1], 1000)
-        x = self.getInterpolatedCooridinates(i)[0]
-        y = self.getInterpolatedCooridinates(i)[1]
-        print(numbers_as_float[0])
-        print(numbers_as_float[1])
+        x = np.linspace(numbers_as_float[0], numbers_as_float[1], 1000)
+        y = self.getInterpolatedCooridinates(x)
         fig, ax = plt.subplots(figsize=(10, 7))
         ax.plot(x, y)
         ax.grid()
+        for i in range(len(functionPoints)):
+            plt.scatter(functionPoints[i], function(functionPoints[i]), color='red')
         ax.axhline(0, color='black', lw=2)
         ax.axvline(0, color='black', lw=2)
         plt.show()
@@ -120,7 +114,6 @@ class GUI:
         button.pack(pady=10)
 
     def findDifferentialQuotients(self, x, y):
-        global result
         r = np.zeros(len(x))
         result = np.zeros(len(x))
         for i in range(len(x)):
@@ -141,11 +134,9 @@ class GUI:
         y = np.zeros(len(functionPoints))
         for k in range(len(functionPoints)):
             y[k] = function(functionPoints[k])
-            print(k,"   ",y[k])
-        toPlot = np.zeros((1000, 2), dtype=float)
+        toPlot = np.zeros(1000)
         for i in range(1000):
-            toPlot[i][0] = x[i]
-            toPlot[i][1] = self.findPolynomialValue(functionPoints, self.findDifferentialQuotients(functionPoints,y), x[i])
+            toPlot[i] = self.findPolynomialValue(functionPoints, self.findDifferentialQuotients(functionPoints,y), x[i])
         return toPlot
 
 
