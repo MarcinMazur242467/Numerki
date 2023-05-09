@@ -133,21 +133,36 @@ class GUI:
         button.pack(pady=10)
 
     def simpsonMethod(self):
+        # trzeba dodac zachowanie co sie dzieje jak mamy integralRange inf obojetnie ktore
+        global N
+        n = N
+        result = 1
         s = 0
-        st = 0
-        dx = (integralRange[1] - integralRange[0])/N
-        for i in range(1, N+1):
-            x = integralRange[0] + i * dx
-            st += self.calculateFunction(x-dx/2)
-            if i < N:
-                s += self.calculateFunction(x)
-        s = dx / 6 * (self.calculateFunction(integralRange[0]) + self.calculateFunction(integralRange[1]) + 2 * s + 4 * st)
+        a = 0
+        while math.fabs(result - s) > epsilon:
+            a+=1
+            result = s
+            st = 0
+            dx = (integralRange[1] - integralRange[0]) / n
+            for i in range(1, n + 1):
+                x = integralRange[0] + i * dx
+                st += self.calculateFunction(x - dx / 2)
+                if i < n:
+                    s += self.calculateFunction(x)
+            s = dx / 6 * (self.calculateFunction(integralRange[0]) + self.calculateFunction(
+                integralRange[1]) + 2 * s + 4 * st)
+            n = n * 2
+        print(a)
         self.text4.config(state="normal")
         self.text4.delete('1.0', 'end')
         self.text4.insert(tk.END, str(s))
         self.text4.config(state="disabled")
 
     def gaussChebyshevMetod(self, nodesAmount):
+        # trzeba dodac obliczanie po zwiekszanym przedziale - to sa te granice
+        # (nie mam pojecia gdzie w tym wzorze to mozna zrobic - wzor z wiki, ktora pokazywal)
+
+        # jak juz sie doda to do gory to trzeba dodac tez porownywanie wyniku z epsilonem (tak jak w sampsonie)
         result = 0
         weight = math.pi / nodesAmount
         for i in range(1, nodesAmount+1):
