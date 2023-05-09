@@ -3,7 +3,7 @@ import sympy
 import matplotlib.pyplot as plt
 import numpy as np
 
-numbers_as_float = [0, 0]
+range = [0, 0]
 functionPoints = []
 function = None
 
@@ -85,13 +85,13 @@ class GUI:
         return functionPoints
 
     def getInterpolationRange(self):
-        global numbers_as_float
+        global range
         user_input = self.text3.get("1.0", tk.END)
         numbers_as_strings = user_input.split(",")
         numbers_as_float = [float(number.strip()) for number in numbers_as_strings]
 
     def printInterpolationFunctionPlot(self):
-        x = np.linspace(numbers_as_float[0], numbers_as_float[1], 1000)
+        x = np.linspace(range[0], range[1], 1000)
         y = self.getInterpolatedCooridinates(x)
         fig, ax = plt.subplots(figsize=(10, 7))
         ax.plot(x, y)
