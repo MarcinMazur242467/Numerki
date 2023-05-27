@@ -32,7 +32,7 @@ def function(x):
     return np.sin(x)
 
 def coefficient(k):
-    result, _ = scipy.integrate.quad(lambda t: function(t) * Tk(k, t) * (1/np.sqrt(1-t*t)), -1, 1)
+    result, _ =(np.pi/2)* scipy.integrate.quad(lambda t: function(t) * Tk(k, t) * (1/np.sqrt(1-t*t)), -1, 1)
     return result
 
 def Tk(n,x):
