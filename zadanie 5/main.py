@@ -120,8 +120,8 @@ class GUI:
     def dupa(self,x):
         return x*x
     def openPopup(self):
-        print((2/np.pi)*self.integrate_simpson(lambda t:self.dupa(t) * Tk(2, t) * (1 / np.sqrt(1 - t * t)),-1,1))
-        print(self.integrate_simpson(lambda t: self.dupa(t),-1,1))
+        print((2/np.pi) * self.integrate_gauss(lambda t: self.dupa(t) * Tk(2, t) * (1 / np.sqrt(1 - t * t)), -1, 1))
+        print(self.integrate_gauss(lambda t: self.dupa(t), -1, 1))
         popup = tk.Toplevel(self.root, )
         popup.title("Autorzy")
         popup.geometry("400x200")
@@ -191,46 +191,17 @@ class GUI:
     #         n = n * 2
     #     return s
 
-    def integrate_simpson(self, f, a, b, n=1000):
-        """
-        Calculate the definite integral of a function using Simpson's rule.
-
-        Arguments:
-        f -- The function to be integrated.
-        a -- The lower limit of integration.
-        b -- The upper limit of integration.
-        n -- The number of subintervals to use (default: 1000).
-
-        Returns:
-        The value of the definite integral.
-        """
-        if a == b:
-            return 0  # Range is zero, so integral is zero
-
-        if n % 2 != 0:
-            n += 1  # Ensure even number of subintervals
-
-        h = (b - a) / n  # Width of each subinterval
-        integral = f(a) + f(b)  # Start with endpoints of the range
-
-        for i in range(1, n):
-            x = a + i * h  # Calculate the x-coordinate of the current subinterval
-
-            try:
-                if i % 2 == 0:
-                    integral += 2 * f(x)  # Even subinterval
-                else:
-                    integral += 4 * f(x)  # Odd subinterval
-            except ZeroDivisionError:
-                continue  # Skip division by zero errors
-
-        integral *= h / 3
-
-        return integral
+    def integrate_gauss(self, f,n=5):
+        result = 0
+        weight = math.pi / n
+        for i in range(1, n+1):
+            node = math.cos(((2 * i - 1) * math.pi) / (2 * n))
+            result += (f(node))/(1/(math.sqrt(1-(node*node))))
+        return weight * result
 
     def coefficient(self,k):
         # result, _ = scipy.integrate.quad(lambda t: self.calculateFunction(t) * Tk(k, t) * (1 / np.sqrt(1 - t * t)), -1, 1)
-        result = self.integrate_simpson(lambda t:self.calculateFunction(t) * Tk(2, t) * (1 / np.sqrt(1 - t * t)),integralRange[0],integralRange[1])
+        result = self.integrate_gauss(lambda t: self.calculateFunction(t) * Tk(k, t) * (1 / np.sqrt(1 - t * t)))
         print(result)
         return result * (2 / np.pi)
 
