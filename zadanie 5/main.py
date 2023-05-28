@@ -10,6 +10,7 @@ degree = 0
 function = None
 epsilon = 0.01
 nodes=0
+aproximation=0
 
 
 class GUI:
@@ -69,6 +70,8 @@ class GUI:
         self.button2 = tk.Button(self.root, text="Wygeneruj wykres", command=lambda:self.plot_approximation(approximationRange[0],approximationRange[1],degree))
         self.button2.pack()
 
+
+
         self.root.mainloop()
 
     def getFunction(self):
@@ -118,10 +121,15 @@ class GUI:
         x = np.linspace(a, b, 100)  # x values for evaluation
         y = self.calculateFunction(x)  # Original function values
 
-        approximation = [self.aproximation(i, N) for i in x]
-
+        global aproximation;
+        approximation1 = [self.aproximation(i, N) for i in x]
+        aproximation = self.l2_error(aproximation,y)
+        self.text5.config(state="normal")
+        self.text5.delete('1.0', 'end')
+        self.text5.insert(tk.END, "Błąd aproksymacji:  " + str(aproximation) + "\n")
+        self.text5.config(state="disabled")
         plt.plot(x, y, label='Funkcja')
-        plt.plot(x, approximation, label='Aproksymacja')
+        plt.plot(x, approximation1, label='Aproksymacja')
         plt.legend()
         plt.xlabel('x')
         plt.ylabel('y')
@@ -140,6 +148,12 @@ class GUI:
         result = self.integrate_gauss(lambda t: self.calculateFunction(t) * Tk(k, t) * (1 / np.sqrt(1 - t * t)),nodes)
         return result * (2 / np.pi)
 
+    def square(self,x):
+        return x*x
+
+    def l2_error(self,approximation, target):
+        error = np.linalg.norm(approximation - target)
+        return error
 
 
     def aproximation(self,x, N):
